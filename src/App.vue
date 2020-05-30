@@ -1,10 +1,22 @@
 <template>
-  <div id="app">I'm empty</div>
+  <div id="app">
+    <SearchBar @termChanged="onTermChange"></SearchBar>
+  </div>
 </template>
 
 <script>
+import SearchBar from "./components/SearchBar";
+
 export default {
-  name: "App"
+  name: "App",
+  components: {
+    SearchBar
+  },
+  methods: {
+    onTermChange(searchTerm) {
+      console.log(searchTerm);
+    }
+  }
 };
 </script>
 
