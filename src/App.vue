@@ -1,7 +1,14 @@
 <template>
-  <div id="app">
+  <div id="app" class="container">
     <SearchBar @termChanged="onTermChange"></SearchBar>
-    <VideoList :videos="videos"></VideoList>
+    <div class="row">
+      <div class="col-md-8">
+        <VideoDetail :video="selectedVideo"></VideoDetail>
+      </div>
+      <div class="col-md-4">
+        <VideoList :videos="videos" @videoSelect="onVideoSelect"></VideoList>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -9,6 +16,7 @@
 import axios from 'axios';
 import SearchBar from './components/SearchBar';
 import VideoList from './components/VideoList';
+import VideoDetail from './components/VideoDetail';
 
 const API_KEY = process.env.VUE_APP_API_KEY;
 
@@ -17,9 +25,10 @@ export default {
   components: {
     SearchBar,
     VideoList,
+    VideoDetail,
   },
   data() {
-    return { videos: [] };
+    return { videos: [], selectedVideo: null };
   },
   methods: {
     onTermChange(searchTerm) {
@@ -37,6 +46,9 @@ export default {
           this.videos = response.data.items;
         });
     },
+    onVideoSelect(video) {
+      this.selectedVideo = video;
+    },
   },
 };
 </script>
@@ -48,6 +60,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 10px;
 }
 </style>
